@@ -7,7 +7,7 @@ class BlogService {
     AppState.blogs = res.data
   }
   aync getOne(id) {
-    const res = await api.get(id)
+    const res = await api.get('api/blogs/' + id)
     AppState.active = res.data
   }
 }
