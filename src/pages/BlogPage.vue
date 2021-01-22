@@ -1,11 +1,12 @@
 <template>
-  <h1>This is where the magic happens</h1>
+  <h1>{{ blog.title }}</h1>
 </template>
 <script>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { blogService } from '../services/BlogService'
 import { logger } from '../utils/Logger'
 import { useRoute } from 'vue-router'
+import { AppState } from '../AppState'
 
 export default {
   setup() {
@@ -17,6 +18,9 @@ export default {
         logger.log(error)
       }
     })
+    return {
+      blog: computed(() => AppState.active)
+    }
   }
 }
 </script>

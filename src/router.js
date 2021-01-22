@@ -13,7 +13,7 @@ const routes = [
   },
   {
     path: '/:id',
-    name: 'Active',
+    name: 'BlogPage',
     component: loadPage('BlogPage')
   },
   {
