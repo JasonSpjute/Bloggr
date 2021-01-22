@@ -5,6 +5,14 @@
         <h1>{{ blog.title }}</h1>
         <h2>{{ blog.creator.name }}</h2>
         <img :src="blog.creator.picture" alt="">
+        <form @submit.prevent="createComment">
+          <div class="form-inline">
+            <input type="string" class="form-control" id="comment" placeholder="Write Comment here" v-model="state.newComment.body">
+            <button type="submit" class="btn btn-primary">
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
     </div>
     <div class="row">
@@ -16,15 +24,22 @@
   </div>
 </template>
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { blogService } from '../services/BlogService'
 import { logger } from '../utils/Logger'
 import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
+import { commentService } from '../services/commentService'
 
 export default {
   setup() {
     const route = useRoute()
+    const state = reactive({
+      newComment: {
+        body: '',
+        blog: route.params.id
+      }
+    })
     onMounted(async() => {
       try {
         await blogService.getOne(route.params.id)
@@ -38,8 +53,16 @@ export default {
       }
     })
     return {
+      state,
       blog: computed(() => AppState.active),
-      comment: computed(() => AppState.comments)
+      comment: computed(() => AppState.comments),
+      async createComment() {
+        try {
+          await commentService.create(state.newComment)
+        } catch (error) {
+          logger.log(error)
+        }
+      }
     }
   }
 }
