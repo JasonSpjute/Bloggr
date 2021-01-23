@@ -20,6 +20,7 @@ class BlogService {
   async createBlog(blog) {
     const res = await api.post('api/blogs', blog)
     AppState.blogs.push(res.data)
+    AppState.myBlogs.push(res.data)
   }
 }
 

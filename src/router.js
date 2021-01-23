@@ -17,9 +17,9 @@ const routes = [
     component: loadPage('BlogPage')
   },
   {
-    path: '/about',
-    name: 'About',
-    component: loadPage('AboutPage')
+    path: '/myBlogs',
+    name: 'MyBlogs',
+    component: loadPage('MyBlogsPage')
   },
   {
     path: '/account',
