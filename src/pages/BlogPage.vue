@@ -1,10 +1,10 @@
 <template>
   <div class="container-fluid">
     <div class="row text-center">
-      <div class="col" v-if="blog.creator">
+      <div class="col-6 offset-3" v-if="blog.creator">
         <h1>{{ blog.title }}</h1>
         <h2>{{ blog.creator.name }}</h2>
-        <img :src="blog.creator.picture" alt="">
+        <img :src="blog.imgUrl" class="img-fluid" alt="">
         <form @submit.prevent="createComment">
           <div class="form-inline">
             <input type="string" class="form-control" id="comment" placeholder="Write Comment here" v-model="state.newComment.body">
