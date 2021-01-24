@@ -52,7 +52,7 @@ export default {
         logger.log(error)
       }
       try {
-        await commentService.getComments(route.params.id)
+        await blogService.getComments(route.params.id)
       } catch (error) {
         logger.log(error)
       }
