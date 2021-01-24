@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postModal">
+        <button type="button" class="btn btn-primary" v-if="state.user.isAuthenticated" data-toggle="modal" data-target="#postModal">
           New Post
         </button>
         <PostModal />
@@ -28,7 +28,8 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
-      blogs: computed(() => AppState.blogs)
+      blogs: computed(() => AppState.blogs),
+      user: computed(() => AppState.user)
     })
     onMounted(async() => {
       try {

@@ -1,10 +1,15 @@
-import { blogService } from './BlogService'
+import { AppState } from '../AppState'
 const { api } = require('./AxiosService')
 
 class CommentService {
   async create(comment) {
     await api.post('api/comments', comment)
-    blogService.getComments(comment.blog)
+    this.getComments()
+  }
+
+  async getComments(id) {
+    const res = await api.get('api/blogs/' + id + '/comments')
+    AppState.comments = res.data
   }
 }
 

@@ -19,7 +19,8 @@ const routes = [
   {
     path: '/myBlogs',
     name: 'MyBlogs',
-    component: loadPage('MyBlogsPage')
+    component: loadPage('MyBlogsPage'),
+    beforeEnter: authGuard
   },
   {
     path: '/account',
