@@ -23,6 +23,16 @@ class BlogService {
     AppState.comments = res.data
   }
 
+  async editBody(id, words) {
+    const data = { body: words }
+    await api.put('api/blogs/' + id, data)
+  }
+
+  async editTitle(id, words) {
+    const data = { title: words }
+    await api.put('api/blogs/' + id, data)
+  }
+
   async deleteBlog(id) {
     await api.delete('api/blogs/' + id)
     const remove = AppState.blogs.findIndex(p => p.id === id)

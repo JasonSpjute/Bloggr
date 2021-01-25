@@ -3,9 +3,10 @@
     <div class="row text-center">
       <div class="col-6 offset-3" v-if="blog.creator">
         <h1>
-          {{ blog.title }}   <router-link :to="{ name: 'MyBlogs'}">
+          <span :contenteditable="state.editTitle" @blur="editTitle">{{ blog.title }}</span>   <router-link :to="{ name: 'MyBlogs'}">
             <i class="fas fa-ban text-danger" v-if="state.account.id == blog.creator.id" @click="deleteBlog"></i>
           </router-link>
+          <span v-if="state.account.id == blog.creator.id"><i class="far fa-edit" @click="state.editTitle = !state.editTitle"></i></span>
         </h1>
         <h2>{{ blog.creator.name }}</h2>
         <img :src="blog.imgUrl" class="img-fluid" alt="">
@@ -13,7 +14,8 @@
     </div>
     <div class="row">
       <div class="col">
-        <p>{{ blog.body }}</p>
+        <span :contenteditable="state.editBody" @blur="editBody">{{ blog.body }}</span>
+        <span v-if="state.account.id == blog.creator.id"><i class="far fa-edit" @click="state.editBody = !state.editBody"></i></span>
       </div>
     </div>
     <form @submit.prevent="createComment">
@@ -43,7 +45,9 @@ export default {
         body: '',
         blog: route.params.id
       },
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      editTitle: false,
+      editBody: false
     })
     onMounted(async() => {
       try {
@@ -64,6 +68,20 @@ export default {
       async createComment() {
         try {
           await commentService.create(state.newComment)
+        } catch (error) {
+          logger.log(error)
+        }
+      },
+      editTitle(e) {
+        try {
+          blogService.editTitle(route.params.id, e.target.innerText)
+        } catch (error) {
+          logger.log(error)
+        }
+      },
+      editBody(e) {
+        try {
+          blogService.editBody(route.params.id, e.target.innerText)
         } catch (error) {
           logger.log(error)
         }
