@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col">
         <span :contenteditable="state.editBody" @blur="editBody">{{ blog.body }}</span>
-        <span v-if="state.account.id == blog.creator.id"><i class="far fa-edit" @click="state.editBody = !state.editBody"></i></span>
+        <i class="far fa-edit text-primary" @click="state.editBody = !state.editBody"></i>
       </div>
     </div>
     <form @submit.prevent="createComment">
